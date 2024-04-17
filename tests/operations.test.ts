@@ -2,6 +2,7 @@ import { operateNumbers } from "../operations";
 import { OperationRequest } from "../interface";
 
 describe("operateNumbers function", () => {
+  
   test("should return the sum of two numbers", () => {
     const request: OperationRequest = {
       operation: "sum",
@@ -32,16 +33,32 @@ describe("operateNumbers function", () => {
     expect(result.result).toBe(8);
   });
 
-  test("should throw an error for invalid operation", () => {
+  test("should return the division of two numbers", () => {
     const request: OperationRequest = {
       operation: "divide",
       num1: 10,
       num2: 2,
     };
-    expect(() => operateNumbers(request)).toThrow(
-      "Invalid operation. Please choose either sum, subtract, or multiply.",
-    );
+    const result = operateNumbers(request);
+    expect(result.result).toBe(5);
   });
 
+  test("should throw an error when dividing by zero", () => {
+    const request: OperationRequest = {
+      operation: "divide",
+      num1: 10,
+      num2: 0,
+    };
+    expect(() => operateNumbers(request)).toThrow("Cannot divide by zero");
+  });
 
+  test("should throw an error for invalid operation", () => {
+    const request: OperationRequest = {
+      operation: "invalid",
+      num1: 10,
+      num2: 2,
+    };
+    expect(() => operateNumbers(request)).toThrow("Invalid operation");
+  });
+  
 });
